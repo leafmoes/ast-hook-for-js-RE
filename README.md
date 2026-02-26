@@ -64,32 +64,38 @@ git clone https://github.com/CC11001100/ast-hook-for-js-RE.git
 
 下载到本地之后安装依赖：
 ```bash
-npm install 
+pnpm install
 ```
 如果是WebStorm点下右下角的提醒就可以了。
 
-### 启动项目 
-需要启动两个本地Server，anyproxy的代理Server监听在本地10086端口，运行这个文件即可： 
-```text
-src/proxy-server/proxy-server.js
+### 启动项目
+
+安装依赖后，直接运行以下命令即可一键启动：
+```bash
+pnpm run dev
 ```
-要用anyproxy抓取https请求需要信任它的证书，在运行这个文件之前，先用`anyproxy ca`选项启动，访问它的web管理界面：
+
+该命令会同时启动以下两个服务：
+- anyproxy 代理服务器，监听本地 **10086** 端口
+- api-server，监听本地 **10010** 端口
+
+> **注意（仅限 Windows）**：代理服务器启动后会自动将系统代理设置为 `127.0.0.1:10086`，无需手动配置浏览器代理。
+> 程序退出（Ctrl+C）时会自动恢复原来的系统代理设置。
+
+要用anyproxy抓取https请求需要信任它的证书，在首次使用时，先访问anyproxy的web管理界面：
 ```text
 http://localhost:8002/
 ```
-然后下载证书信任即可： 
+然后下载证书信任即可：
 
 ![](images/README_images/fa6bcf49.png)
 
 这些都属于anyproxy的安装，如果出了问题请自行谷歌如何解决，
 我总不能老在自己的项目教如何安装人家的项目吧...
 
-api-server监听在本地10010端口，运行这个文件即可：
-```text
-src/api-server/api-server.js
-```
-
-然后在浏览器中将代理设置为10086端口即可，这里推荐使用便携版Chrome搭建单独的调试环境，并搭配`Proxy SwitchyOmega`或类似的插件作为代理路由辅助：
+在 Windows 下系统代理会自动设置，浏览器直接走系统代理即可生效。
+若浏览器不走系统代理（如便携版Chrome），可手动将代理设置为 `127.0.0.1:10086`，
+或搭配 `Proxy SwitchyOmega` 等插件进行代理路由配置：
 
 [https://chrome.google.com/webstore/detail/padekgcemlokbadohgkifijomclgjgif](https://chrome.google.com/webstore/detail/padekgcemlokbadohgkifijomclgjgif)
 

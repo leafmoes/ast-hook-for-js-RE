@@ -169,7 +169,8 @@ function processJavaScriptResponse(requestDetail, responseDetail) {
 }
 
 function isNeedIgnoreHook(body) {
-    return body.startsWith("{");
+    // 以 { 开头的是 JSON，以 )]}' 开头的是 Google XSSI 防护前缀，均不是合法 JS，跳过
+    return body.startsWith("{") || body.startsWith(")]}'");
 }
 
 function processFromCache(responseDetail, url, body) {
